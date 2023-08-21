@@ -1,4 +1,4 @@
-import quizManager
+from quizManager import QuizManager
 
 
 class QuizApp:
@@ -6,7 +6,7 @@ class QuizApp:
 
     def __init__(self) -> None:
         self.username = ""
-        self.qm = quizManager(QuizApp.QUIZ_FOLDER)
+        self.qm = QuizManager(QuizApp.QUIZ_FOLDER)
 
     def startup(self):
         self.greeting()
@@ -65,6 +65,11 @@ class QuizApp:
                     print(f"You have selected quiz number {quiznum}")
                     self.qm.take_quiz(quiznum, self.username)
                     self.qm.print_results()
+
+                    dosave = input("Save the result y/n?: ")
+                    dosave = dosave.capitalize()
+                    if len(dosave) > 0 and dosave[0] == "Y":
+                        self.qm.save_results()
                 except:
                     self.menu_error()
 
