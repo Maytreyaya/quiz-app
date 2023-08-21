@@ -43,12 +43,12 @@ class QuizParser(xml.sax.ContentHandler):
                 self._current_question = QuestioncMC()
             elif attrs["type"] == "tf":
                 self._current_question = QuestionTF()
-            self._current_question.points = attrs["points"]
+            self._current_question.points = int(attrs["points"])
             self.new_quiz.total_points += self._current_question.points
 
         elif tagname == "QuestionText":
             self._parse_state = QuizParserState.PARSE_QUEST_TEXT
-            self._current_answer.correct_password = attrs["answer"]
+            self._current_question.correct_answer = attrs["answer"]
 
         elif tagname == "Answer":
             self._current_answer = Answer()

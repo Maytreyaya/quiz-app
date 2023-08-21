@@ -1,7 +1,12 @@
+import quizManager
+
+
 class QuizApp:
+    QUIZ_FOLDER = "quizes"
 
     def __init__(self) -> None:
         self.username = ""
+        self.qm = quizManager(QuizApp.QUIZ_FOLDER)
 
     def startup(self):
         self.greeting()
@@ -51,18 +56,22 @@ class QuizApp:
                 self.menu_header()
             elif selection[0] == "L":
                 print("\nAvailable quizzes are: ")
+                self.qm.list_quizzes()
                 print("-----------------------\n")
                 continue
             elif selection[0] == "T":
-                 try:
-                     quiznum = int(input("Enter quiz number please--> "))
-                     print(f"You have selected quiz number {quiznum}")
-                 except:
-                     self.menu_error()
+                try:
+                    quiznum = int(input("Enter quiz number please--> "))
+                    print(f"You have selected quiz number {quiznum}")
+                    self.qm.take_quiz(quiznum, self.username)
+                    self.qm.print_results()
+                except:
+                    self.menu_error()
 
             else:
                 self.menu_error()
                 continue
+
     def run(self):
         self.startup()
         self.menu()
